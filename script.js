@@ -36,7 +36,12 @@ const tasks = [];
 document.getElementById("add").onclick = function () {
   if (document.getElementById("newTask").value.length == 0) {
     alert("please input a valid task");
-  } else {
+  }else if (document.getElementById("priority").value.length == 0){
+    alert("please input a valid priority (low, med, or high)");
+  }else if (document.getElementById("priority").value !== "low" && document.getElementById("priority").value !== "med" && document.getElementById("priority").value !== "high") {
+    alert("please input a valid priority (low, med, or high)");
+  } 
+  else {
     addTask();
   }
 };
