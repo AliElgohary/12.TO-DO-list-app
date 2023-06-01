@@ -36,7 +36,7 @@ const addTaskToList = function (i, task) {
           <td scope="col">${i + 1}</td>
           <td scope="col">${task.taskName}</td>
           <td scope="col">${task.priority}</td>
-          <td scope="col"><button class="btn btn-danger" id="delete" onclick="deleteTask(${i})" >delete</button></td>
+          <td scope="col"><button class="btn btn-danger" id="delete" onclick="deleteTask(${i})" >delete</button> <button class="btn btn-success" id="edit" onclick="editTask(${i})" >Edit</button> </td>
           </tr>
           `;
 
@@ -47,7 +47,7 @@ const renderTaskTable = function () {
   for (let i = 0; i < tasks.length; i++) {
     tbody += addTaskToList(i, tasks[i]);
   }
-  document.querySelector("table").innerHTML = tbody;
+  document.getElementById("tableContent").innerHTML = tbody;
 };
 
 const deleteTask = function (i) {
