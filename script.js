@@ -34,9 +34,10 @@ const addTaskToList = function (i, task) {
   let tr = `
           <tr">  
           <td scope="col">${i + 1}</td>
-          <td scope="col">${task.taskName}</td>
+          <td scope="col" class="taskCol">${task.taskName}</td>
           <td scope="col">${task.priority}</td>
-          <td scope="col"><button class="btn btn-danger" id="delete" onclick="deleteTask(${i})" >delete</button> <button class="btn btn-success" id="edit" onclick="editTask(${i})" >Edit</button> </td>
+    <td scope="col"><button class="btn btn-success" onclick="renderEdit(${i})" >Edit</button> 
+    <button class="btn btn-danger" onclick="deleteTask(${i})" >delete</button>  </td>
           </tr>
           `;
 
@@ -54,3 +55,23 @@ const deleteTask = function (i) {
   tasks.splice(i, 1);
   renderTaskTable();
 };
+
+const renderEdit = function (i) {
+  document.getElementById(
+"modifications"
+  ).innerHTML = `<input type="text" class="form-control" placeholder="edit your task name here" id="editedTask"> 
+  <button class="btn btn-secondary" onclick="cancelEdit()" >Cancel</button>
+  <button class="btn btn-light" onclick="saveEdit(${i})" >Save</button>`;
+};
+
+const saveEdit = function (i){
+  tasks[i].taskName = document.getElementById("editedTask").value;
+  renderTaskTable();
+}
+
+const cancelEdit = function(){
+  document.getElementById(
+    "modifications"
+      ).innerHTML = ""
+  renderTaskTable();
+}
