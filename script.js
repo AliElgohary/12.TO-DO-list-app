@@ -34,9 +34,9 @@ document.getElementById("add").onclick = function (task) {
 
 const addTaskToList = function (i, task) {
   let tr = `
-          <tr">  
+          <tr >  
           <td scope="col">${i + 1}</td>
-          <td scope="col">${task.taskName}</td>
+          <td scope="col" id="task${i}" class="d-flex justify-content-center">${task.taskName}</td>
           <td scope="col">${task.priority}</td>
     <td scope="col"><button class="btn btn-success" onclick="renderEdit(${i})" >Edit</button> 
     <button class="btn btn-danger" onclick="deleteTask(${i})" >delete</button>  </td>
@@ -62,9 +62,9 @@ const deleteTask = function (i) {
 
 const renderEdit = function (i) {
   document.getElementById(
-    "modifications"
-  ).innerHTML = `<input type="text" class="form-control" placeholder="edit your task name here" id="editedTask"> 
-  <button class="btn btn-secondary" onclick="cancelEdit()" >Cancel</button>
+    `task${i}`
+  ).innerHTML = `<input type="text" class="form-control w-50" placeholder="edit your task name here" id="editedTask"> 
+  <button class="btn btn-secondary mx-2" onclick="cancelEdit()" >Cancel</button>
   <button class="btn btn-light" onclick="saveEdit(${i})" >Save</button>`;
 };
 
@@ -74,7 +74,7 @@ const saveEdit = function (i) {
   renderTaskTable();
 };
 
-const cancelEdit = function () {
-  document.getElementById("modifications").innerHTML = "";
+const cancelEdit = function (i) {
+  document.getElementById(`editedTask`).innerHTML = "";
   renderTaskTable();
 };
