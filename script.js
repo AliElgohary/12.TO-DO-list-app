@@ -4,6 +4,7 @@ class Task {
     this.priority = priority;
   }
 }
+
 let taskCount = 1;
 const tasks = [];
 
@@ -12,6 +13,7 @@ const addTask = function () {
   const priority = document.getElementById("priority").value;
   const task = new Task(taskName, priority);
   tasks.push(task);
+
 };
 
 document.getElementById("add").onclick = function (task) {
@@ -34,13 +36,12 @@ const addTaskToList = function (i, task) {
   let tr = `
           <tr">  
           <td scope="col">${i + 1}</td>
-          <td scope="col" class="taskCol">${task.taskName}</td>
+          <td scope="col">${task.taskName}</td>
           <td scope="col">${task.priority}</td>
     <td scope="col"><button class="btn btn-success" onclick="renderEdit(${i})" >Edit</button> 
     <button class="btn btn-danger" onclick="deleteTask(${i})" >delete</button>  </td>
           </tr>
           `;
-
   return tr;
 };
 const renderTaskTable = function () {
@@ -49,29 +50,31 @@ const renderTaskTable = function () {
     tbody += addTaskToList(i, tasks[i]);
   }
   document.getElementById("tableContent").innerHTML = tbody;
+  const taskName = document.getElementById("newTask").value = "";
+  const priority = document.getElementById("priority").value = "";
 };
 
 const deleteTask = function (i) {
   tasks.splice(i, 1);
   renderTaskTable();
+  
 };
 
 const renderEdit = function (i) {
   document.getElementById(
-"modifications"
+    "modifications"
   ).innerHTML = `<input type="text" class="form-control" placeholder="edit your task name here" id="editedTask"> 
   <button class="btn btn-secondary" onclick="cancelEdit()" >Cancel</button>
   <button class="btn btn-light" onclick="saveEdit(${i})" >Save</button>`;
 };
 
-const saveEdit = function (i){
+const saveEdit = function (i) {
   tasks[i].taskName = document.getElementById("editedTask").value;
+  cancelEdit();
   renderTaskTable();
-}
+};
 
-const cancelEdit = function(){
-  document.getElementById(
-    "modifications"
-      ).innerHTML = ""
+const cancelEdit = function () {
+  document.getElementById("modifications").innerHTML = "";
   renderTaskTable();
-}
+};
