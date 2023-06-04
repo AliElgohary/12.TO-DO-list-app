@@ -28,6 +28,8 @@ let tasksArray = [
     ["Nathalie Nader", "Task 01", "Option 1"],
     ["Mariam Ahmed", "Task 01", "Option 1"],
   ];
+
+  
   
   //join every seperate array 
   let newArray = [];
@@ -44,9 +46,11 @@ let tasksArray = [
   //seperate exery [i] back to its original form
    let finalResultArr = []
   for(let i = 0; i < unrepeatedtArr.length; i++){
-   finalResultArr[i] = unrepeatedtArr.slice(",")
+   finalResultArr[i] = unrepeatedtArr[i].split(",")
   }
   
   //showing result
+  console.log(finalResultArr)  
   console.log(tasksArray.length)
   console.log(finalResultArr.length)  
+  
