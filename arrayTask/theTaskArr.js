@@ -51,6 +51,5 @@ let tasksArray = [
   
   //showing result
   console.log(finalResultArr)  
-  console.log(tasksArray.length)
-  console.log(finalResultArr.length)  
-  
+  console.log("count of previos elements = " + tasksArray.length)
+  console.log("currnt elements = " + finalResultArr.length)  
