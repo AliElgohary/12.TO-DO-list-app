@@ -11,6 +11,9 @@ h1 {
 button , a {
   cursor: pointer;
 }
+a:hover {
+  color: aliceblue;
+}
 
 .container {
   max-width: 1100px;
