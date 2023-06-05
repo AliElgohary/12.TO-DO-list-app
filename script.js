@@ -69,7 +69,12 @@ const renderEdit = function (i) {
 };
 
 const saveEdit = function (i) {
+  if(document.getElementById("editedTask").value.length == 0){
+    alert("please enter a valid task");
+    }
+  else if(document.getElementById("editedTask").value.length > 0){
   tasks[i].taskName = document.getElementById("editedTask").value;
+  }
   cancelEdit();
   renderTaskTable();
 };
