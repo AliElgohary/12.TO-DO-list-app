@@ -7,7 +7,8 @@ class Task {
     tasks.push(this);
   }
   valid(name, priority) {
-    if (name == 0) {
+    const regEx = /^[Aa-zZ]/;
+    if (regEx.test(name) == false) {
       alert("please input a valid task");
       return false;
     } else if (
@@ -41,6 +42,11 @@ document.getElementById("add").onclick = function (task) {
   renderTaskTable();
 };
 
+const deleteTask = function (i) {
+  tasks[i].delete(i);
+  renderTaskTable();
+};
+
 const addTaskToList = function (i, task) {
   let tr = `
           <tr >  
@@ -65,10 +71,7 @@ const renderTaskTable = function () {
   const priority = (document.getElementById("priority").value = "");
 };
 
-const deleteTask = function (i) {
-  tasks[i].delete(i);
-  renderTaskTable();
-};
+
 
 const renderEdit = function (i) {
   document.getElementById(
