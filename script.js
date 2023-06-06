@@ -26,6 +26,20 @@ class Task {
     tasks.splice(i, 1);
   }
 }
+class TaskStatus extends Task{
+  constructor(taskName, priority, status){
+    super(taskName, priority);
+    this.status = status;
+  }
+  done(){
+    this.status = true;
+    return this.status;
+  }
+  undone(){
+    this.status = false;
+    return this.status;
+  }
+}
 
 let tasks = [];
 const addTask = function () {
@@ -46,6 +60,8 @@ const deleteTask = function (i) {
   tasks[i].delete(i);
   renderTaskTable();
 };
+
+
 
 const addTaskToList = function (i, task) {
   let tr = `
