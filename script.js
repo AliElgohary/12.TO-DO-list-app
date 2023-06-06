@@ -3,32 +3,42 @@ class Task {
     this.taskName = taskName;
     this.priority = priority;
   }
+  add() {
+    tasks.push(this);
+  }
+  valid(name, priority) {
+    if (name == 0) {
+      alert("please input a valid task");
+      return false;
+    } else if (
+      isNaN(Number(priority)) ||
+      Number(priority) < 1 ||
+      Number(priority) > 5
+    ) {
+      alert("please input a valid priority, number between 1 and 5.");
+      return false;
+    } else {
+      return true;
+    }
+  }
+  delete(i) {
+    tasks.splice(i, 1);
+  }
 }
 
-let taskCount = 1;
 let tasks = [];
-
 const addTask = function () {
   const taskName = document.getElementById("newTask").value;
   const priority = document.getElementById("priority").value;
   const task = new Task(taskName, priority);
-  tasks.push(task);
+  if (task.valid(taskName, priority)) {
+    task.add();
+  }
 };
 
 document.getElementById("add").onclick = function (task) {
-  if (document.getElementById("newTask").value.length == 0) {
-    alert("please input a valid task");
-  } else if (
-    isNaN(Number(document.getElementById("priority").value)) ||
-    Number(document.getElementById("priority").value) < 1 ||
-    Number(document.getElementById("priority").value) > 5
-  ) {
-    alert("please input a valid priority, number between 1 and 5.");
-  } else {
-    addTask();
-    renderTaskTable();
-    taskCount++;
-  }
+  addTask();
+  renderTaskTable();
 };
 
 const addTaskToList = function (i, task) {
@@ -56,7 +66,7 @@ const renderTaskTable = function () {
 };
 
 const deleteTask = function (i) {
-  tasks.splice(i, 1);
+  tasks[i].delete(i);
   renderTaskTable();
 };
 
@@ -69,11 +79,10 @@ const renderEdit = function (i) {
 };
 
 const saveEdit = function (i) {
-  if(document.getElementById("editedTask").value.length == 0){
+  if (document.getElementById("editedTask").value.length == 0) {
     alert("please enter a valid task");
-    }
-  else if(document.getElementById("editedTask").value.length > 0){
-  tasks[i].taskName = document.getElementById("editedTask").value;
+  } else if (document.getElementById("editedTask").value.length > 0) {
+    tasks[i].taskName = document.getElementById("editedTask").value;
   }
   cancelEdit();
   renderTaskTable();
