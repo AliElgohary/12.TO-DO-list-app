@@ -26,18 +26,30 @@ class Task {
     tasks.splice(i, 1);
   }
 }
-class TaskStatus extends Task{
-  constructor(taskName, priority, status){
-    super(taskName, priority);
-    this.status = status;
+
+class TodoUI {
+  static addTaskToList(i, task) {
+    let tr = `
+          <tr >  
+          <td scope="col">${i + 1}</td>
+          <td scope="col" id="task${i}" class="d-flex justify-content-center">${
+      task.taskName
+    }</td>
+          <td scope="col">${task.priority}</td>
+    <td scope="col"><button class="btn btn-success" onclick="renderEdit(${i})" >Edit</button> 
+    <button class="btn btn-danger" onclick="deleteTask(${i})" >delete</button>  </td>
+          </tr>
+          `;
+    return tr;
   }
-  done(){
-    this.status = true;
-    return this.status;
-  }
-  undone(){
-    this.status = false;
-    return this.status;
+  static renderTaskTable() {
+    let tbody = "";
+    for (let i = 0; i < tasks.length; i++) {
+      tbody += TodoUI.addTaskToList(i, tasks[i]);
+    }
+    document.getElementById("tableContent").innerHTML = tbody;
+    const taskName = (document.getElementById("newTask").value = "");
+    const priority = (document.getElementById("priority").value = "");
   }
 }
 
@@ -53,38 +65,12 @@ const addTask = function () {
 
 document.getElementById("add").onclick = function (task) {
   addTask();
-  renderTaskTable();
+  TodoUI.renderTaskTable();
 };
 
 const deleteTask = function (i) {
   tasks[i].delete(i);
-  renderTaskTable();
-};
-
-
-
-const addTaskToList = function (i, task) {
-  let tr = `
-          <tr >  
-          <td scope="col">${i + 1}</td>
-          <td scope="col" id="task${i}" class="d-flex justify-content-center">${
-    task.taskName
-  }</td>
-          <td scope="col">${task.priority}</td>
-    <td scope="col"><button class="btn btn-success" onclick="renderEdit(${i})" >Edit</button> 
-    <button class="btn btn-danger" onclick="deleteTask(${i})" >delete</button>  </td>
-          </tr>
-          `;
-  return tr;
-};
-const renderTaskTable = function () {
-  let tbody = "";
-  for (let i = 0; i < tasks.length; i++) {
-    tbody += addTaskToList(i, tasks[i]);
-  }
-  document.getElementById("tableContent").innerHTML = tbody;
-  const taskName = (document.getElementById("newTask").value = "");
-  const priority = (document.getElementById("priority").value = "");
+  TodoUI.renderTaskTable();
 };
 
 
@@ -104,24 +90,39 @@ const saveEdit = function (i) {
     tasks[i].taskName = document.getElementById("editedTask").value;
   }
   cancelEdit();
-  renderTaskTable();
+  TodoUI.renderTaskTable();
 };
 
 const cancelEdit = function (i) {
   document.getElementById(`editedTask`).innerHTML = "";
-  renderTaskTable();
+  TodoUI.renderTaskTable();
 };
 
 const SortByName = function () {
   tasks = tasks.sort((n1, n2) =>
     n1.taskName > n2.taskName ? 1 : n2.taskName > n1.taskName ? -1 : 0
   );
-  renderTaskTable();
+  TodoUI.renderTaskTable();
 };
 
 const SortByPriority = function () {
   tasks = tasks.sort((p1, p2) =>
     p1.priority > p2.priority ? 1 : p2.priority > p1.priority ? -1 : 0
   );
-  renderTaskTable();
+  TodoUI.renderTaskTable();
 };
+
+class TaskStatus extends Task {
+  constructor(taskName, priority, status) {
+    super(taskName, priority);
+    this.status = status;
+  }
+  done() {
+    this.status = true;
+    return this.status;
+  }
+  undone() {
+    this.status = false;
+    return this.status;
+  }
+}
