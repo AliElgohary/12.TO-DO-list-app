@@ -2,21 +2,18 @@ class Task {
   constructor(taskName, priority) {
     this.taskName = taskName;
     this.priority = priority;
+    this.done = false; 
   }
   add() {
     tasks.push(this);
   }
   valid(name, priority) {
-    const regEx = /^[Aa-zZ]/;
-    if (regEx.test(name) == false) {
-      alert("please input a valid task");
+    const regEx = /^[A-Za-z]/;
+    if (!regEx.test(name)) {
+      alert("Please input a valid task.");
       return false;
-    } else if (
-      isNaN(Number(priority)) ||
-      Number(priority) < 1 ||
-      Number(priority) > 5
-    ) {
-      alert("please input a valid priority, number between 1 and 5.");
+    } else if (isNaN(Number(priority)) || Number(priority) < 1 || Number(priority) > 5) {
+      alert("Please input a valid priority number between 1 and 5.");
       return false;
     } else {
       return true;
@@ -25,21 +22,32 @@ class Task {
   delete(i) {
     tasks.splice(i, 1);
   }
+  markDone() {
+    this.done = true;
+  }
 }
 
 class TodoUI {
   static addTaskToList(i, task) {
+    let taskNameClass = task.done ? 'taskDone' : '';
+    let priorityClass = task.done ? 'taskDone' : '';
+    let doneButton = task.done ? 'Undone' : 'Done';
     let tr = `
-          <tr >  
-          <td scope="col">${i + 1}</td>
-          <td scope="col" id="task${i}" class="d-flex justify-content-center">${
-      task.taskName
-    }</td>
-          <td scope="col">${task.priority}</td>
-    <td scope="col"><button class="btn btn-success" onclick="renderEdit(${i})" >Edit</button> 
-    <button class="btn btn-danger" onclick="deleteTask(${i})" >delete</button>  </td>
-          </tr>
-          `;
+      <tr>  
+        <td scope="col">${i + 1}</td>
+        <td scope="col" id="task${i}" class="d-flex justify-content-center ${taskNameClass}">
+          ${task.taskName}
+        </td>
+        <td scope="col" class="${priorityClass}">
+        ${task.priority}
+      </td>
+        <td scope="col">
+          <button class="btn btn-success" onclick="renderEdit(${i})">Edit</button> 
+          <button class="btn btn-danger" onclick="deleteTask(${i})">Delete</button>
+          <button class="btn btn-outline-light" onclick="markTaskDone(${i})">${doneButton}</button>
+        </td>
+      </tr>
+    `;
     return tr;
   }
   static renderTaskTable() {
@@ -52,6 +60,14 @@ class TodoUI {
     const priority = (document.getElementById("priority").value = "");
   }
 }
+
+const markTaskDone = function (i) {
+  tasks[i].done = !tasks[i].done;
+  TodoUI.renderTaskTable();
+};
+
+
+
 
 let tasks = [];
 const addTask = function () {
@@ -111,18 +127,3 @@ const SortByPriority = function () {
   );
   TodoUI.renderTaskTable();
 };
-
-class TaskStatus extends Task {
-  constructor(taskName, priority, status) {
-    super(taskName, priority);
-    this.status = status;
-  }
-  done() {
-    this.status = true;
-    return this.status;
-  }
-  undone() {
-    this.status = false;
-    return this.status;
-  }
-}
