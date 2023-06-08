@@ -3,6 +3,7 @@ class Task {
     this.taskName = taskName;
     this.priority = priority;
     this.done = false; 
+    this.checked = false;
   }
   add() {
     tasks.push(this);
@@ -32,12 +33,18 @@ class TodoUI {
     let taskNameClass = task.done ? 'taskDone' : '';
     let priorityClass = task.done ? 'taskDone' : '';
     let doneButton = task.done ? 'Undone' : 'Done';
+    let checkBox = task.checked ? 'checked' : '';
     let tr = `
       <tr>  
         <td scope="col">${i + 1}</td>
-        <td scope="col" id="task${i}" class="d-flex justify-content-center ${taskNameClass}">
-          ${task.taskName}
+        <div class="form-check">
+        <td scope="col" id="task${i}" class="${taskNameClass}">
+        <input type="checkbox" onchange="toggleTaskChecked(${i})" ${checkBox} class="form-check-input" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+        ${task.taskName}
+        </label> 
         </td>
+        </div>
         <td scope="col" class="${priorityClass}">
         ${task.priority}
       </td>
@@ -66,8 +73,14 @@ const markTaskDone = function (i) {
   TodoUI.renderTaskTable();
 };
 
+const toggleTaskChecked = function (i) {
+  tasks[i].checked = !tasks[i].checked;
+};
 
-
+const deleteCheckedTasks = function () {
+  tasks = tasks.filter(task => !task.checked); 
+  TodoUI.renderTaskTable();
+};
 
 let tasks = [];
 const addTask = function () {
