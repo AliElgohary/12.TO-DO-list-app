@@ -38,8 +38,8 @@ a:hover {
 }
 .taskDone {
   text-decoration: line-through;
-  text-decoration-thickness: 3px; /* Set the thickness of the line */
-  text-decoration-color: red; /* Set the color of the line */
+  text-decoration-thickness: 3px;
+  text-decoration-color: black; 
 }
 
 

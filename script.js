@@ -38,9 +38,9 @@ class TodoUI {
       <tr>  
         <td scope="col">${i + 1}</td>
         <div class="form-check">
-        <td scope="col" id="task${i}" class="${taskNameClass}">
+        <td scope="col" id="task${i}" >
         <input type="checkbox" onchange="toggleTaskChecked(${i})" ${checkBox} class="form-check-input" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
+        <label class="form-check-label ${taskNameClass}" for="flexCheckDefault">
         ${task.taskName}
         </label> 
         </td>
